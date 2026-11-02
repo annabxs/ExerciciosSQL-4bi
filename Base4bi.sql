@@ -1888,4 +1888,97 @@ on pi.id_pedido = pe.id_pedido
 where c.ativo = 1 and pe.data_pedido like '2026%';
 
 -- 36.1
+select c.nome as 'cliente', pe.data_pedido, pr.nome, pi.quantidade, pr.preco 
+from cliente c 
+inner join pedido pe
+on pe.id_cliente = c.id_cliente
+inner join pedido_item pi
+on pi.id_pedido = pe.id_pedido
+INNER JOIN produto pr
+ON pr.id_produto = pi.id_produto;
 
+-- 36.2
+	SELECT c.nome AS 'cliente', pe.data_pedido, pr.nome AS 'produto', pi.quantidade, pr.preco AS 'preco_unitario'
+	FROM cliente c
+	INNER JOIN pedido pe
+	ON pe.id_cliente = c.id_cliente
+	INNER JOIN pedido_item pi
+	ON pi.id_pedido = pe.id_pedido
+	INNER JOIN produto pr
+	ON pi.id_produto = pr.id_produto
+	WHERE pr.preco > 500 AND pi.quantidade > 1;
+    
+    -- 37.1 
+    SELECT pr.nome AS 'produto', pr.preco, pr.estoque, ca.nome AS 'categoria'
+    FROM produto pr
+    INNER JOIN categoria ca
+    ON pr.id_categoria = ca.id_categoria;
+    
+-- 37.2
+    SELECT pr.nome AS 'produto', pr.preco, pr.estoque, ca.nome AS 'categoria'
+    FROM produto pr
+    INNER JOIN categoria ca
+    ON pr.id_categoria = ca.id_categoria
+    WHERE ca.nome IN ('Software', 'Segurança', 'Energia');
+    
+-- 38.1
+	SELECT c.nome AS 'cliente', pe.data_pedido, pr.nome AS 'produto', ca.nome AS 'categoria', pi.quantidade, pr.preco AS 'preco_unitario'
+	FROM cliente c
+	INNER JOIN pedido pe
+	ON pe.id_cliente = c.id_cliente
+	INNER JOIN pedido_item pi
+	ON pi.id_pedido = pe.id_pedido
+	INNER JOIN produto pr
+	ON pi.id_produto = pr.id_produto
+    INNER JOIN categoria ca
+    ON pr.id_categoria = ca.id_categoria
+    ORDER BY ca.nome; 
+    
+    -- 38.2
+  	SELECT c.nome AS 'cliente', pe.data_pedido, pr.nome AS 'produto', ca.nome AS 'categoria', pi.quantidade, pr.preco AS 'preco_unitario'
+	FROM cliente c
+	INNER JOIN pedido pe
+	ON pe.id_cliente = c.id_cliente
+	INNER JOIN pedido_item pi
+	ON pi.id_pedido = pe.id_pedido
+	INNER JOIN produto pr
+	ON pi.id_produto = pr.id_produto
+    INNER JOIN categoria ca
+    ON pr.id_categoria = ca.id_categoria
+    WHERE ca.nome IN ('Monitores', 'Software', 'Fotografia') AND c.ativo = 1
+    order by ca.nome, pr.nome; -- Revisar pois está correto, mas não igual o exemplo da apostila
+    
+    -- 39.1 
+    SELECT c.id_cliente, c.nome, c.email
+    FROM cliente c LEFT JOIN pedido pe
+    ON pe.id_cliente = c.id_cliente
+    WHERE pe.id_pedido IS NULL;
+
+-- 39.2
+    SELECT ca.id_categoria, ca.nome AS 'categoria'
+    FROM categoria ca LEFT JOIN produto pr
+    ON pr.id_categoria = ca.id_categoria
+    WHERE pr.id_categoria IS NULL;
+    
+-- 40.1
+SELECT c.nome, pe.id_pedido, pe.data_pedido, pr.nome AS 'produto', ca.nome AS 'categoria', pi.quantidade, pr.preco AS 'preco_unitario'
+FROM cliente c
+INNER JOIN pedido pe
+ON pe.id_cliente = c.id_cliente
+INNER JOIN pedido_item pi
+ON pe.id_pedido = pi.id_pedido
+INNER JOIN produto pr
+ON pr.id_produto = pi.id_produto
+INNER JOIN categoria ca
+ON ca.id_categoria = pr.id_categoria
+ORDER BY data_pedido DESC
+LIMIT 50;
+
+-- 40.2
+SELECT c.id_cliente, c.nome AS 'nome', pe.id_pedido
+FROM cliente c LEFT JOIN pedido pe
+ON c.id_cliente = pe.id_cliente 
+UNION 
+SELECT c.id_cliente, c.nome AS 'nome', pe.id_pedido
+FROM cliente c RIGHT JOIN pedido pe
+ON c.id_cliente = pe.id_cliente;
