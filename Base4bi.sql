@@ -1479,24 +1479,24 @@ select id_produto, nome, preco, estoque from produto where estoque < 10 or estoq
 select * from cliente where nome like 'A%';
 
 -- 17.2
-select * from cliente where nome like 'M%';
+select id_cliente, nome, email from cliente where nome like 'M%';
 
 -- 17.3
-select * from produto where nome like '%USB%';
+select id_produto, nome, preco, estoque from produto where nome like '%USB%';
 
 -- 17.4
-select * from produto where nome like 'Monitor%';
+select id_produto, nome, preco, estoque from produto where nome like 'Monitor%';
 
 -- 17.5
-select * from cliente where nome like 'R%' and email like '%@outlook.com';
+select id_cliente, nome, email from cliente where nome like 'R%' and email like '%@outlook.com';
 
 -- Exercício 18.1
 
-select * from cliente where email is null;
+select id_cliente, nome, email, ativo from cliente where email is null;
 
-select * from cliente where email is null and ativo is True;
+select id_cliente, nome, email, ativo from cliente where email is null and ativo is True;
 
-select * from cliente where email is null and ativo is False;
+select id_cliente, nome, email, ativo from cliente where email is null and ativo is False;
 
 select count(*) as cliente_sem_email from cliente where email is null;
 
@@ -1504,36 +1504,37 @@ select count(*) as cliente_com_email from cliente where email is not null;
 
 -- Exercício 19
 -- 19.1 
-select * from produto where preco between 400 and 600;
+select id_produto, nome, preco, estoque from produto where preco between 400 and 600;
 
 -- 19.2 
-select * from produto where estoque between 10 and 20;
+select id_produto, nome, preco, estoque from produto where estoque between 10 and 20;
 
 -- 19.3
 select * from pedido where valor between 2000 and 3000;
-
+update pedido set id_pedido = id_pedido -1 where id_pedido is not null;
+SET SQL_SAFE_UPDATES = 0;
 -- 19.4
-select * from cliente where data_cadastro between '2025-07-01' and '2025-12-31';
+select id_cliente, nome, email, data_cadastro from cliente where data_cadastro between '2025-07-01' and '2025-12-31';
 
 -- Exercício 20
 -- 20.1
 
-select * from produto
+select id_produto, nome, preco, estoque, id_categoria from produto
 where id_categoria in(2,4,6);
 
 -- exercicio 20.2
 
-select * from produto
+select id_produto, nome, preco, estoque, id_categoria from produto
 where id_categoria in(9,10,11);
 
 -- exercicio 20.3
 
-select * from pedido
+select id_pedido, id_cliente, valor, desconto from pedido
 where desconto in (5,15,20);
 
 -- exercicio 20.4
 
-select * from cliente
+select id_cliente, nome, email, ativo from cliente
 where id_cliente in(5,10,15,20,25);
 
 -- Exercício 21
@@ -1560,95 +1561,95 @@ order by id_categoria asc;
 -- Exercicio 22
 -- 22.1
 
-select * from cliente 
+select id_cliente, nome, email from cliente 
 order by nome asc
 limit 20;
 
 -- 22.2
 
-select * from produto
+select id_produto, nome, preco, estoque from produto
 order by preco desc
 limit 15;
 
 -- 22.3
 
-select * from pedido 
+select id_pedido, id_cliente, data_pedido, valor from pedido 
 order by data_pedido desc
 limit 20;
 
 -- 22.4
 
-select * from produto 
+select id_produto, nome, preco, estoque, id_categoria from produto 
 order by id_categoria, nome asc
 limit 20;
 
 -- Exercício 23
 -- 23.1
-select * from cliente 
+select id_cliente, nome, email, data_cadastro from cliente 
 order by data_cadastro asc
 limit 5;
 
 -- 23.2
-select * from produto
+select id_produto, nome, preco, estoque from produto
 order by preco desc
 limit 10;
 
 -- 23.3
-select * from produto
+select id_produto, nome, preco, estoque from produto
 order by estoque asc
 limit 5; 
 
 -- 23.4
-select * from pedido
+select id_pedido, id_cliente, valor, desconto from pedido
 order by valor desc
 limit 10;
 
 -- Exercício 24
 -- 24.1
 
-select * from produto
+select id_produto, nome, preco, estoque from produto
 order by id_produto
 limit 10;
 
 -- 24.2
 
-select * from produto
+select id_produto, nome, preco, estoque from produto
 order by id_produto
 limit 10 offset 10;
 
 -- 24.3
 
-select * from produto
+select id_produto, nome, preco, estoque from produto
 order by id_produto
 limit 10 offset 20;
 
 -- 24.4
 
-select * from produto
+select id_produto, nome, preco, estoque from produto
 order by id_produto
 limit 10 offset 40;
 
 -- Exercício 25
 -- 25.1
-select * from cliente 
+select id_cliente, nome, email, ativo from cliente 
 where nome like 'M%' and ativo = 1
 order by email asc
 limit 15;
 
 -- 25.2
-select * from produto 
+select id_produto, nome, preco, estoque from produto 
 where preco between 200 and 800 and
 estoque > 30;
 
 -- 25.3
-select * from pedido
+select id_pedido, id_cliente, valor, desconto from pedido
 where valor > 1000 and
 desconto = 10 or desconto = 20
 order by valor desc
 limit 20;
 
 -- 25.4
-select * from cliente 
+select id_cliente, nome, email, data_cadastro from cliente 
 where email like '%@gmail.com' and
 data_cadastro like '2025%'
 order by nome asc;
@@ -1669,9 +1670,9 @@ limit 10;
 
 -- 26.3
 -- arrumar 
-select * from cliente
+select id_cliente, nome, email, data_cadastro from cliente
 order by data_cadastro desc 
-limit 15 offset 15; 
+limit 15; 
 
 -- 26.4
 
@@ -1690,21 +1691,21 @@ limit 10;
 
 -- 27.1
 
-SELECT * FROM CLIENTE
+SELECT id_cliente, nome, email, ativo FROM CLIENTE
 WHERE EMAIL IS NULL
 ORDER  BY NOME
 LIMIT 25;
 
 -- 27.2
 
-SELECT * FROM PRODUTO 
+SELECT id_produto, nome, preco, estoque FROM PRODUTO 
 WHERE ESTOQUE <= 10
 ORDER BY ESTOQUE
 LIMIT 25;
 
 -- 27.3
 
-SELECT * FROM PEDIDO
+SELECT id_pedido, id_cliente, valor, desconto FROM PEDIDO
 WHERE DESCONTO IS FALSE
 ORDER BY VALOR DESC
 LIMIT 20; 
@@ -1718,7 +1719,7 @@ LIMIT 25;
 
 --  27.5 
 
-SELECT * FROM CLIENTE
+SELECT id_cliente, nome, email, ativo, data_cadastro FROM CLIENTE
 WHERE ATIVO IS FALSE
 ORDER BY DATA_CADASTRO DESC
 LIMIT 15;
@@ -1727,35 +1728,35 @@ LIMIT 15;
 
 -- 28.1
 
-SELECT * FROM CLIENTE
+SELECT id_cliente, nome, email FROM CLIENTE
 WHERE EMAIL LIKE '%@GMAIL.COM'
 ORDER BY NOME
 LIMIT 20;
 
 -- 28.2
 
-SELECT * FROM CLIENTE
+SELECT id_cliente, nome, email FROM CLIENTE
 WHERE EMAIL LIKE '%@OUTLOOK.COM'
 ORDER BY NOME
 LIMIT 20;
 
 -- 28.3
 
-SELECT * FROM CLIENTE
+SELECT id_cliente, nome, email FROM CLIENTE
 WHERE NOME LIKE 'S%'
 ORDER BY NOME
 LIMIT 25;
 
 -- 28.4
 
-SELECT * FROM CLIENTE
+SELECT id_cliente, nome, email, data_cadastro FROM CLIENTE
 WHERE DATA_CADASTRO LIKE '2026%'
 ORDER BY DATA_CADASTRO DESC
 LIMIT 20;
 
 -- 28.5
 
-SELECT * FROM CLIENTE
+SELECT id_cliente, nome, email, ativo FROM CLIENTE
 WHERE ATIVO IS TRUE AND (NOME LIKE 'A%' OR NOME LIKE 'B%')
 ORDER BY NOME
 LIMIT 25;
@@ -1781,7 +1782,7 @@ LIMIT 20;
 
 SELECT ID_CLIENTE,NOME,EMAIL,ATIVO FROM CLIENTE
 ORDER BY NOME ASC
-LIMIT 20;
+LIMIT 20; -- parou aqui 16/11
 
 -- 29.5
 
