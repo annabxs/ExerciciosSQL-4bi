@@ -1791,7 +1791,7 @@ ORDER BY DATA_PEDIDO DESC
 LIMIT 15;
 
 -- 30.1
-
+-- corrigir daqui
 select p.id_pedido, p.data_pedido,p.valor,c.nome as 'cliente'
 from pedido p 
 inner join cliente c 
