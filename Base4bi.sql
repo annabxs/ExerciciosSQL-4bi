@@ -1511,7 +1511,6 @@ select id_produto, nome, preco, estoque from produto where estoque between 10 an
 
 -- 19.3
 select * from pedido where valor between 2000 and 3000;
-update pedido set id_pedido = id_pedido -1 where id_pedido is not null;
 SET SQL_SAFE_UPDATES = 0;
 -- 19.4
 select id_cliente, nome, email, data_cadastro from cliente where data_cadastro between '2025-07-01' and '2025-12-31';
@@ -1947,7 +1946,7 @@ ON pr.id_produto = pi.id_produto;
     INNER JOIN categoria ca
     ON pr.id_categoria = ca.id_categoria
     WHERE ca.nome IN ('Monitores', 'Software', 'Fotografia') AND c.ativo = 1
-    order by ca.nome, pr.nome; -- Revisar pois está correto, mas não igual o exemplo da apostila
+    order by ca.nome, pr.id_produto, pe.id_pedido;
     
     -- 39.1 
     SELECT c.id_cliente, c.nome, c.email
